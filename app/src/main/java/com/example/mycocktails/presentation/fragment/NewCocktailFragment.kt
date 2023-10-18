@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.mycocktails.MyCocktailsApplication
 import com.example.mycocktails.R
 import com.example.mycocktails.databinding.FragmentNewCocktailBinding
-import com.example.mycocktails.domain.model.Cocktail
 import com.example.mycocktails.presentation.viewmodel.NewCocktailViewModel
 import com.example.mycocktails.utils.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -24,8 +23,7 @@ class NewCocktailFragment : Fragment() {
     private lateinit var viewModel: NewCocktailViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNewCocktailBinding.inflate(inflater, container, false)
         inject()
@@ -56,12 +54,9 @@ class NewCocktailFragment : Fragment() {
         with(binding) {
             saveButton.setOnClickListener {
                 viewModel.onEditButtonClicked(
-                    Cocktail(
-                        id = 3,
-                        title = title.toString(),
-                        description = description.toString(),
-                        recipe = recipe.toString(),
-                    )
+                    title = title.text.toString(),
+                    description = description.text.toString(),
+                    recipe = recipe.text.toString(),
                 )
             }
 

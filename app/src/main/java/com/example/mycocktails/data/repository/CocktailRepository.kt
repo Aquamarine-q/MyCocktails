@@ -12,13 +12,12 @@ class CocktailRepository
     private val cocktailDao = db.cocktailDao()
 
     fun saveCocktail(cocktail: Cocktail): Completable {
-        return Completable.fromAction {
-            cocktailDao.insertAll(cocktail)
-        }.subscribeOn(Schedulers.io())
+        return cocktailDao.insertAll(cocktail)
+            .subscribeOn(Schedulers.io())
     }
 
     fun getCocktails(): Single<List<Cocktail>> {
-        return Single.just(cocktailDao.getAll())
+        return cocktailDao.getAll()
             .subscribeOn(Schedulers.io())
     }
 }

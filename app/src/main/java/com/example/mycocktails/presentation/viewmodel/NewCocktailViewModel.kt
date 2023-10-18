@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.mycocktails.data.repository.CocktailRepository
 import com.example.mycocktails.domain.model.Cocktail
 import com.example.mycocktails.utils.livedata.SingleLiveEvent
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class NewCocktailViewModel
@@ -18,22 +18,31 @@ class NewCocktailViewModel
     private val _singleEvent = SingleLiveEvent<Boolean>()
     val singleEvent: LiveData<Boolean> = _singleEvent
 
-    fun onEditButtonClicked(cocktail: Cocktail) {
-        if (cocktail.title.isBlank()) {
+    fun onEditButtonClicked(
+        title: String,
+        description: String,
+        recipe: String,
+    ) {
+        if (title.isBlank()) {
             _viewState.value = true
         } else {
-            saveCocktail(cocktail)
+            saveCocktail(
+                Cocktail(
+                    title = title,
+                    description = description,
+                    recipe = recipe,
+                )
+            )
         }
     }
 
     private fun saveCocktail(cocktail: Cocktail) {
-        /*cocktailRepository.saveCocktail(cocktail)
-            .subscribeOn(Schedulers.io())
+        cocktailRepository.saveCocktail(cocktail).observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                _singleEvent.postValue(true)
+                _singleEvent.postValue(false)
             }.apply {
                 val compositeDisposable = CompositeDisposable()
                 compositeDisposable.add(this)
-            }*/
+            }
     }
 }

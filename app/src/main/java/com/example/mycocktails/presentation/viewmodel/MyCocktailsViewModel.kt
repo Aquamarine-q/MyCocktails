@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycocktails.data.repository.CocktailRepository
-import com.example.mycocktails.domain.model.Cocktail
 import com.example.mycocktails.presentation.viewState.MyCocktailsViewState
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MyCocktailsViewModel
@@ -17,8 +16,7 @@ class MyCocktailsViewModel
     val viewState: LiveData<MyCocktailsViewState> = _viewState
 
     fun onScreenOpened() {
-        /*cocktailRepository.getCocktails()
-            .subscribeOn(Schedulers.io())
+        cocktailRepository.getCocktails().observeOn(AndroidSchedulers.mainThread())
             .subscribe({ listCocktails ->
                 _viewState.postValue(
                     _viewState.value?.copy(
@@ -35,19 +33,12 @@ class MyCocktailsViewModel
             }).apply {
                 val compositeDisposable = CompositeDisposable()
                 compositeDisposable.add(this)
-            }*/
+            }
     }
 
     private fun getDefaultState(): MyCocktailsViewState {
         return MyCocktailsViewState(
-            cocktails = listOf(
-                Cocktail(id = 1, title = "Пина Колада", description = "ghbdtn", recipe = "jdjdjd"),
-                Cocktail(id = 2, title = "Вода", description = "xcvcxv", recipe = "qwe") ,
-                Cocktail(id = 3, title = "Лед", description = "xcvcxv", recipe = "qwe"),
-                Cocktail(id = 4, title = "Минералка", description = "xcvcxv", recipe = "qwe"),
-                Cocktail(id = 5, title = "Сок", description = "xcvcxv", recipe = "qwe"),
-                Cocktail(id = 6, title = "Блю Курасао", description = "xcvcxv", recipe = "qwe")
-            ),
+            cocktails = emptyList(),
             isLoading = false,
         )
     }

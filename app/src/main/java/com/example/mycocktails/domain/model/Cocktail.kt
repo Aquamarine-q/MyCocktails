@@ -8,8 +8,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Cocktail(
-    @PrimaryKey val id: Int,
-
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String?,
     @ColumnInfo(name = "recipe") val recipe: String?,

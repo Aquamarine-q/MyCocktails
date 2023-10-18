@@ -5,7 +5,9 @@ import com.example.mycocktails.presentation.fragment.MyCocktailsFragment
 import com.example.mycocktails.presentation.fragment.NewCocktailFragment
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
+@Singleton
 @Component(
     modules = [
         CocktailDatabaseModule::class,
